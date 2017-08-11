@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CubeStopWatch</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_records">Records</string>
+    <string name="time_layout_blank">00:00.000</string>
+    <string name="toolbar_title">Stopwatch</string>
+    <string name="toolbar_title_records">Records</string>
+    <string name="records_menu_times">Times</string>
+    <string name="records_menu_stats">Stats</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_delete">DELETE</string>
+    <string name="dialog_ask">Delete this saved time?</string>
+    <string name="button_start">START</string>
+    <string name="button_stop">STOP</string>
+    <string name="button_reset">RESET</string>
+    <string name="button_save">SAVE</string>
+    <string name="title_activity_records">RecordsActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+</resources>
