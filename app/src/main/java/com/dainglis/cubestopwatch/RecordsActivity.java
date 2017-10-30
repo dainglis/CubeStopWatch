@@ -22,24 +22,9 @@ public class RecordsActivity extends AppCompatActivity
 
     ListView timesListView;
     int indexToDelete;
-    List<Integer> RAW_TIMES;
+    List<Long> RAW_TIMES;
     List<String> TIMES;
     ArrayAdapter tAdapter;
-
-    /*
-     * String convertTime(String rawTime)
-     * receives a time in milliseconds (String), returns String
-     *   of the format "M:SS:XXX"
-     */
-    public static String convertTime(int timeMS) {
-        int second = timeMS/1000;
-        int minute = second/60;
-        second %= 60;
-        int millisecond = timeMS % 1000;
-        return ("" + String.format(Locale.getDefault(), "%02d", minute) + ":"
-                + String.format(Locale.getDefault(), "%02d", second) + "."
-                + String.format(Locale.getDefault(), "%03d", millisecond));
-    }
 
     /*
      * void showTimeDeleteDialog()
@@ -93,14 +78,14 @@ public class RecordsActivity extends AppCompatActivity
             int content;
             while ((content = inStream.read()) != -1) {
                 if (content == ';') {
-                    int rawTime = 0;
+                    long rawTime = 0;
                     try {
                         rawTime = Integer.parseInt(data);
                     } catch (NumberFormatException nfe) {
                         nfe.printStackTrace();
                     }
                     RAW_TIMES.add(0, rawTime);
-                    TIMES.add(0, convertTime(rawTime));
+                    TIMES.add(0, Helper.convertTime(rawTime));
                     data = "";
                 } else {
                     data += (char) content;

@@ -17,6 +17,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class ClockMainActivity extends AppCompatActivity {
@@ -29,23 +32,6 @@ public class ClockMainActivity extends AppCompatActivity {
     boolean timing, paused;
 
     long timeStart, timeMS, timeOffset, timeCounter;
-
-    /*
-     * String convertTime(long timeMS)
-     * receives a time in milliseconds (long), returns String
-     *   of the format "MMM:SS:XXX"
-     */
-    public static String convertTime(long timeMS) {
-        //int rawTime = (int) timeMS;
-        int second = (int) (timeMS/1000);
-        int minute = second/60;
-        second %= 60;
-        int millisecond = (int) (timeMS%1000);
-        //timerText.setText
-        return ("" + String.format(Locale.getDefault(), "%02d", minute) + ":"
-                + String.format(Locale.getDefault(), "%02d", second) + "."
-                + String.format(Locale.getDefault(), "%03d", millisecond));
-    }
 
     /*
      * void resetClock()
@@ -84,7 +70,7 @@ public class ClockMainActivity extends AppCompatActivity {
         @Override
         public void run() {
             timeMS = SystemClock.elapsedRealtime() - timeStart - timeOffset;
-            String text = convertTime(timeMS);
+            String text = Helper.convertTime(timeMS);
             timerText.setText(text);
             timerHandler.postDelayed(this, 0);
         }
@@ -153,8 +139,12 @@ public class ClockMainActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                 }
 
-                Snackbar.make(view, "Time saved in records", Snackbar.LENGTH_SHORT)
+                // TESTING toast with current date
+                String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime());
+                Snackbar.make(view, formattedDate, Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                //Snackbar.make(view, "Time saved in records", Snackbar.LENGTH_SHORT)
+                 //       .setAction("Action", null).show();
                 resetClock();
             }
         });
