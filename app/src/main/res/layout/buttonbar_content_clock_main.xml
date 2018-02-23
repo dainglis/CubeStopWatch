@@ -13,7 +13,7 @@
     android:orientation="horizontal">
 
     <Button
-        android:id="@+id/button_A"
+        android:id="@+id/button_left_save"
         android:text="@string/button_save"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_height"
@@ -24,7 +24,7 @@
         tools:ignore="ButtonStyle" />
 
     <Button
-        android:id="@+id/button_B"
+        android:id="@+id/button_right_reset"
         android:text="@string/button_reset"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_height"

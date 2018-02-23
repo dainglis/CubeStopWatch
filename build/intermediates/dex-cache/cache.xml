@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\a59b8ef3701379e2d310de7cf0fa7a09\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cad1364721fc716a39bdc351d3637edb634c9aa5">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.4.0.aar\82111c0bcfcd1360e0e33849b6092116\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c2deeac83ffa1304264bc755c2ddb84e7a7fa239">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\12.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.4.0.aar\ed04a3ca468fb9ddded47283b7430622\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b1e0cd070d7cf659ece90e919bff76e7ddc32532">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.4.0.aar\79b3dd828c905749b3e9648aeadd2552\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e04f28ac2dd9bbe48ced6fc87fedf46c2586f5d6">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\11.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\transition-25.4.0.aar\b85b9effaf6652215e4ee515edf0be17\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="40a6b8f05124eb9e6012e18b80a6dbd13440e283">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\support-v4-25.4.0.aar\a4910a60fac0a238ecec2a598541368f\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\support-fragment-25.4.0.aar\77e1afd1c43fcedfe1c3dd67c5cced48\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d29e451fd5bcc265989bf80afd4f149d95d72e7d">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\modules-2\files-2.1\com.android.support\support-annotations\25.4.0\f6a2fc748ae3769633dea050563e1613e93c135e\support-annotations-25.4.0.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f6a2fc748ae3769633dea050563e1613e93c135e">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.4.0.aar\4d10d64a7d1496a418260b0cbb38796b\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="4961be1437163ab598620a3c907c0f3432936f51">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.4.0.aar\5aa685aaa49e7229607882ac8a2fc462\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="05e3d15c623cd98f0eb43c8249fb6151fae0786c">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\10.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.4.0.aar\f54721b542f4af16380c44a0983b012b\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b77e50b3c31d0fc64148530f7077f79ec114b5b9">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\support-compat-25.4.0.aar\b4e6c250edea764850a76ab83d50fb22\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a64026daf4819a589aea776f5deb19b257a104d1">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\13.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\percent-25.4.0.aar\6dc91881d0f6b41f88476ec71ce2f4eb\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3cf9b397641400da0e89c6515ceaffaf98999ad0">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\David\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.4.0.aar\0534b2f3099eaaf04fd34c6014a0aa81\jars\classes.jar"
+        jumboMode="false"
+        min-sdk-version="17"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a7a0aa678c3bbadb67fb41df9e107f7ee9087902">
+        <dex dex="D:\Documents\Android\Studio\CubeStopWatch\app\build\intermediates\transforms\preDex\release\2.jar" />
+    </item>
+
+</items>
