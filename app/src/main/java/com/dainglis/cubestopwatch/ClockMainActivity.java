@@ -19,13 +19,12 @@ import android.widget.TextView;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class ClockMainActivity extends AppCompatActivity {
 
     ImageButton clockButton;
-    Button buttonA, buttonB;
+    Button buttonLeft, buttonRight;
     TextView timerText;
     Handler timerHandler = new Handler();
 
@@ -49,10 +48,10 @@ public class ClockMainActivity extends AppCompatActivity {
      * sets both buttons on the toolbar to disabled and invisible
      */
     public void toolbarDisable() {
-        buttonA.setEnabled(false);
-        buttonB.setEnabled(false);
-        buttonA.setVisibility(View.INVISIBLE);
-        buttonB.setVisibility(View.INVISIBLE);
+        buttonLeft.setEnabled(false);
+        buttonRight.setEnabled(false);
+        buttonLeft.setVisibility(View.INVISIBLE);
+        buttonRight.setVisibility(View.INVISIBLE);
     }
 
     /*
@@ -60,10 +59,10 @@ public class ClockMainActivity extends AppCompatActivity {
      * sets both buttons on the toolbar to enabled and visible
     */
     public void toolbarEnable() {
-        buttonA.setEnabled(true);
-        buttonB.setEnabled(true);
-        buttonA.setVisibility(View.VISIBLE);
-        buttonB.setVisibility(View.VISIBLE);
+        buttonLeft.setEnabled(true);
+        buttonRight.setEnabled(true);
+        buttonLeft.setVisibility(View.VISIBLE);
+        buttonRight.setVisibility(View.VISIBLE);
     }
 
     Runnable updateTimerThread = new Runnable() {
@@ -85,8 +84,8 @@ public class ClockMainActivity extends AppCompatActivity {
 
         timerText = (TextView) findViewById(R.id.timer_text);
         clockButton = (ImageButton) findViewById(R.id.inv_clock_button);
-        buttonA = (Button) findViewById(R.id.button_A);
-        buttonB = (Button) findViewById(R.id.button_B);
+        buttonLeft = (Button) findViewById(R.id.button_left_save);
+        buttonRight = (Button) findViewById(R.id.button_right_reset);
 
         resetClock();
 
@@ -122,11 +121,13 @@ public class ClockMainActivity extends AppCompatActivity {
         });
 
         // button A is the SAVE button
-        buttonA.setOnClickListener(new View.OnClickListener() {
+        buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String filename = "records";
-                String data = String.format(Locale.getDefault(), "%d", timeMS) + ";";
+                String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime());
+
+                String data = String.format(Locale.getDefault(), "%d", timeMS) + "/" + formattedDate + ";";
                 FileOutputStream outStream;
 
                 try {
@@ -139,18 +140,14 @@ public class ClockMainActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                 }
 
-                // TESTING toast with current date
-                String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime());
-                Snackbar.make(view, formattedDate, Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, "Time " + data + " saved in records", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
-                //Snackbar.make(view, "Time saved in records", Snackbar.LENGTH_SHORT)
-                 //       .setAction("Action", null).show();
                 resetClock();
             }
         });
 
         // button B is the RESET button
-        buttonB.setOnClickListener(new View.OnClickListener() {
+        buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /*

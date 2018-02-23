@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,7 +26,13 @@ public class RecordsActivity extends AppCompatActivity
     int indexToDelete;
     List<Long> RAW_TIMES;
     List<String> TIMES;
+    List<String> DATES;
     ArrayAdapter tAdapter;
+    private SimpleAdapter sAdapter;
+
+    ArrayList<HashMap<String, String>> timeList = new ArrayList<>();
+
+    final String filename = "records";
 
     /*
      * void showTimeDeleteDialog()
@@ -40,11 +48,13 @@ public class RecordsActivity extends AppCompatActivity
         if (indexToDelete >= 0) {
             //remove selected index from list, rewrite file with edited data, re-read
             RAW_TIMES.remove(indexToDelete);
+            DATES.remove(indexToDelete);
 
-            String filename = "records";
+
             String data = "";
             for (int i = RAW_TIMES.size() -1; i >= 0; i--) {
-                data = data + RAW_TIMES.get(i) + ";";
+                data = data + RAW_TIMES.get(i) + "/"
+                    + DATES.get(i) + ";";
             }
             FileOutputStream outStream;
 
@@ -57,6 +67,10 @@ public class RecordsActivity extends AppCompatActivity
             }
             RAW_TIMES.clear();
             TIMES.clear();
+            DATES.clear();
+
+            timeList.clear();
+
             readTimesFromFile();
 
             indexToDelete = -1;
@@ -69,15 +83,21 @@ public class RecordsActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
+    /*
+     * readTimesFromFile:
+     *   reads from const filename and parses info into two lists
+     *   info stored as x(*)/yyyy-MM-dd HH:mm:ss;
+     *   takes x(*) into TIMES, yyyy-MM-dd HH:mm:ss into DATES, each at index i
+     */
     public void readTimesFromFile() {
         FileInputStream inStream;
         String data = "";
 
         try {
-            inStream = openFileInput("records");
+            inStream = openFileInput(filename);
             int content;
             while ((content = inStream.read()) != -1) {
-                if (content == ';') {
+                if (content == '/') {
                     long rawTime = 0;
                     try {
                         rawTime = Integer.parseInt(data);
@@ -87,6 +107,9 @@ public class RecordsActivity extends AppCompatActivity
                     RAW_TIMES.add(0, rawTime);
                     TIMES.add(0, Helper.convertTime(rawTime));
                     data = "";
+                } else if (content == ';') {
+                    DATES.add(0, data);
+                    data = "";
                 } else {
                     data += (char) content;
                 }
@@ -95,7 +118,27 @@ public class RecordsActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        tAdapter.notifyDataSetChanged();
+
+        // called to update HashMap for ListView display
+        writeHashMap();
+    }
+
+    /*
+     * writeHashMap:
+     *   builds timeItem HashMap from TIMES and DATES info, for two-line ListView display
+     */
+    public void writeHashMap() {
+        HashMap<String, String> timeItem;
+        for (int i = 0; i < TIMES.size(); i++) {
+            timeItem = new HashMap<>();
+            timeItem.put("line1", TIMES.get(i));
+            // added two spaces for indentation padding
+            timeItem.put("line2", "  " + DATES.get(i));
+            timeList.add(timeItem);
+        }
+        // tAdapter no longer used, for single line list view
+        // tAdapter.notifyDataSetChanged();
+        sAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -109,12 +152,32 @@ public class RecordsActivity extends AppCompatActivity
 
         RAW_TIMES = new ArrayList<>();
         TIMES = new ArrayList<>();
+        DATES = new ArrayList<>();
         indexToDelete = -1;
 
-        tAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TIMES);
-        timesListView.setAdapter(tAdapter);
+        //disabling this adapter for now
+        //tAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, TIMES);
+
+        //SimpleAdapter connects HashMap of times and dates with LinearLayout
+        sAdapter = new SimpleAdapter(this,
+                timeList,
+                R.layout.content_records_twolinelist,
+                new String[] {"line1", "line2"},
+                new int[] {R.id.top_line_time, R.id.bottom_line_date});
+
+        timesListView.setAdapter(sAdapter);
         readTimesFromFile();
 
+        //onClick toast for debugging selected position
+        timesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String text = DATES.get(position);
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //onLongClick toast for debugging held position
         timesListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
