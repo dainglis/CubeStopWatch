@@ -32,6 +32,18 @@ public class RecordsActivity extends AppCompatActivity
 
     ArrayList<HashMap<String, String>> timeList = new ArrayList<>();
 
+    //TODO:
+    /* Read from file to get records file name (for 2x2 Cube, 3x3 Cube, Megaminx, Pyraminx, etc).
+     * This is also needed in ClockMainActivity as it is currently dependent on a fixed "records" file
+     *
+     */
+
+
+
+
+    final String file_userData = "user_data";
+
+    //TODO: REMOVE DEPENDENCY
     final String filename = "records";
 
     /*
@@ -105,7 +117,7 @@ public class RecordsActivity extends AppCompatActivity
                         nfe.printStackTrace();
                     }
                     RAW_TIMES.add(0, rawTime);
-                    TIMES.add(0, Helper.convertTime(rawTime));
+                    TIMES.add(0, Conversion.convertTime(rawTime));
                     data = "";
                 } else if (content == ';') {
                     DATES.add(0, data);
@@ -132,12 +144,9 @@ public class RecordsActivity extends AppCompatActivity
         for (int i = 0; i < TIMES.size(); i++) {
             timeItem = new HashMap<>();
             timeItem.put("line1", TIMES.get(i));
-            // added two spaces for indentation padding
-            timeItem.put("line2", "  " + DATES.get(i));
+            timeItem.put("line2", DATES.get(i));
             timeList.add(timeItem);
         }
-        // tAdapter no longer used, for single line list view
-        // tAdapter.notifyDataSetChanged();
         sAdapter.notifyDataSetChanged();
     }
 
@@ -182,6 +191,7 @@ public class RecordsActivity extends AppCompatActivity
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String text = "Item " + String.format(Locale.getDefault(), "%d", position) + " long-pressed";
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
                 indexToDelete = position;
                 showTimeDeleteDialog();

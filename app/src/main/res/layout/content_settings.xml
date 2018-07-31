@@ -13,4 +13,10 @@
     tools:context="com.dainglis.cubestopwatch.SettingsActivity"
     tools:showIn="@layout/activity_settings">
 
+    <ListView
+        android:id="@+id/settings_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

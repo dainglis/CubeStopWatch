@@ -6,7 +6,7 @@ import java.util.Locale;
  * Created by David on 3/10/2017.
  */
 
-public class Helper {
+public class Conversion {
     /*
      * String convertTime(long timeMS)
      * receives a time in milliseconds (long), returns String

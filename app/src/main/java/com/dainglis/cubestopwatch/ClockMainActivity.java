@@ -69,7 +69,7 @@ public class ClockMainActivity extends AppCompatActivity {
         @Override
         public void run() {
             timeMS = SystemClock.elapsedRealtime() - timeStart - timeOffset;
-            String text = Helper.convertTime(timeMS);
+            String text = Conversion.convertTime(timeMS);
             timerText.setText(text);
             timerHandler.postDelayed(this, 0);
         }
@@ -120,10 +120,11 @@ public class ClockMainActivity extends AppCompatActivity {
             }
         });
 
-        // button A is the SAVE button
+        // buttonLeft is the SAVE button
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO: REMOVE DEPENDENCY
                 String filename = "records";
                 String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime());
 
@@ -146,7 +147,7 @@ public class ClockMainActivity extends AppCompatActivity {
             }
         });
 
-        // button B is the RESET button
+        // buttonRight is the RESET button
         buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
