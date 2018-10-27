@@ -22,9 +22,10 @@
 
     <TextView
         android:id="@+id/license_text_view"
+        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/settings_list_view" />
 
 </RelativeLayout>
