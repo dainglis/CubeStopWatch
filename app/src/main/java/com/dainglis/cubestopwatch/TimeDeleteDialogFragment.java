@@ -21,7 +21,7 @@ public class TimeDeleteDialogFragment extends DialogFragment {
         void onDialogNegativeClick(DialogFragment dialog);
     }
 
-    TimeDeleteDialogListener tdListener;
+    private TimeDeleteDialogListener tdListener;
 
     @Override
     public void onAttach(Context context) {

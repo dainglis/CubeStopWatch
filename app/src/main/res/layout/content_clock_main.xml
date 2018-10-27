@@ -37,4 +37,16 @@
         android:layout_above="@id/view_anchor"
         android:textColor="@android:color/white"
         android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/ready_text"
+        android:text="@string/timer_ready_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/timer_text"
+        android:textColor="@android:color/white"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
 </RelativeLayout>

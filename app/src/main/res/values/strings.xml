@@ -3,7 +3,15 @@
     <string name="action_settings">Settings</string>
     <string name="action_records">Records</string>
     <string name="time_layout_blank">00:00.000</string>
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    <string name="timer_ready_text">READY</string>
+>>>>>>> Created PuzzleTimer object to handle all timer actions. Code is being refactored
+=======
+    <string name="timer_ready_text">READY</string>
+>>>>>>> master
     <string name="toolbar_title">Stopwatch</string>
     <string name="toolbar_title_records">Records</string>
     <string name="toolbar_title_settings">Settings</string>
@@ -22,5 +30,8 @@
 
     <string name="title_activity_records">RecordsActivity</string>
     <string name="title_activity_settings">Settings</string>
+
+    <string name="version">0.1</string>
+    <string name="version_info">CubeStopWatch ver 0.1\nGNU GPL - David Inglis 2018</string>
 
 </resources>
