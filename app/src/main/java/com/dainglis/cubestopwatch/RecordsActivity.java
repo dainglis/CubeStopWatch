@@ -118,15 +118,9 @@ public class RecordsActivity extends AppCompatActivity
                         nfe.printStackTrace();
                     }
                     RAW_TIMES.add(0, rawTime);
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    TIMES.add(0, Conversion.convertTime(rawTime));
-=======
+
                     TIMES.add(0, PuzzleTimer.formatTime(rawTime));
->>>>>>> Created PuzzleTimer object to handle all timer actions. Code is being refactored
-=======
-                    TIMES.add(0, PuzzleTimer.formatTime(rawTime));
->>>>>>> master
+
                     data = "";
                 } else if (content == ';') {
                     DATES.add(0, data);

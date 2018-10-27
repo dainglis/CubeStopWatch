@@ -36,66 +36,10 @@ public class ClockMainActivity extends AppCompatActivity {
     PuzzleTimer timer = new PuzzleTimer();
     Handler timerHandler = new Handler();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    boolean timing, paused;
-
-    long timeStart, timeMS, timeOffset, timeCounter;
-
-    /*
-     * void resetClock()
-     * sets all aspects of the stopwatch back to default
-     */
-    public void resetClock() {
-        toolbarDisable();
-        timing = false;
-        paused = false;
-        timerText.setText(R.string.time_layout_blank);
-    }
-
-    /*
-     * void toolbarDisable()
-     * sets both buttons on the toolbar to disabled and invisible
-     */
-    public void toolbarDisable() {
-        buttonLeft.setEnabled(false);
-        buttonRight.setEnabled(false);
-        buttonLeft.setVisibility(View.INVISIBLE);
-        buttonRight.setVisibility(View.INVISIBLE);
-    }
-
-    /*
-     * void toolbarEnable()
-     * sets both buttons on the toolbar to enabled and visible
-    */
-    public void toolbarEnable() {
-        buttonLeft.setEnabled(true);
-        buttonRight.setEnabled(true);
-        buttonLeft.setVisibility(View.VISIBLE);
-        buttonRight.setVisibility(View.VISIBLE);
-    }
-
-    Runnable updateTimerThread = new Runnable() {
-        @Override
-        public void run() {
-            timeMS = SystemClock.elapsedRealtime() - timeStart - timeOffset;
-            String text = Conversion.convertTime(timeMS);
-            timerText.setText(text);
-            timerHandler.postDelayed(this, 0);
-        }
-    };
-=======
     ImageButton timerButton;
     Button buttonLeft, buttonRight;
     TextView timerText, readyText;
->>>>>>> Created PuzzleTimer object to handle all timer actions. Code is being refactored
-=======
-    ImageButton timerButton;
-    Button buttonLeft, buttonRight;
-    TextView timerText, readyText;
->>>>>>> master
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,15 +106,7 @@ public class ClockMainActivity extends AppCompatActivity {
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                //TODO: REMOVE DEPENDENCY
-=======
-                //TODO: remove hardcoded filename, need flexible filenames'
->>>>>>> Created PuzzleTimer object to handle all timer actions. Code is being refactored
-=======
-                //TODO: remove hardcoded filename, need flexible filenames'
->>>>>>> master
+
                 String filename = "records";
                 String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime());
 
@@ -210,6 +146,20 @@ public class ClockMainActivity extends AppCompatActivity {
         });
     }
 
+    Runnable updateTimerThread = new Runnable() {
+        @Override
+        public void run() {
+            // this runnable is used to update the screen with current timer time
+            long gTime = timer.getTime();
+
+            String text = PuzzleTimer.formatTime(gTime);
+
+            timerText.setText(text);
+
+            timerHandler.postDelayed(this, 0);
+        }
+    };
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -237,20 +187,6 @@ public class ClockMainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    Runnable updateTimerThread = new Runnable() {
-        @Override
-        public void run() {
-            // this runnable is used to update the screen with current timer time
-            long gTime = timer.getTime();
-
-            String text = PuzzleTimer.formatTime(gTime);
-
-            timerText.setText(text);
-
-            timerHandler.postDelayed(this, 0);
-        }
-    };
 
 
     /*
