@@ -26,13 +26,8 @@ public class PuzzleTimer {
     *   PARAMS  :
     *       void
     */
-    public PuzzleTimer() {
-        timeStart = 0;
-        timeOffset = 0;
-        timeCounter = 0;
-
-        timing = true;
-        paused = false;
+    PuzzleTimer() {
+        reset();
     }
 
     /*
@@ -46,15 +41,12 @@ public class PuzzleTimer {
     *           true if timer was successfully started
     *           false if timer is already started
     */
-    public boolean start() {
+    void start() {
         if (!timing) {
             timeStart = SystemClock.elapsedRealtime();
             timeOffset = 0;
             timing = true;
             paused = false;
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -69,15 +61,13 @@ public class PuzzleTimer {
     *           true if timer was successfully paused
     *           false otherwise
     */
-    public boolean pause() {
+    void pause() {
         if (!paused) {
             paused = true;
             timeCounter = SystemClock.elapsedRealtime();
-            return true;
-        } else {
-            return false;
         }
     }
+
 
     /*
         *   METHOD  : pause
@@ -90,37 +80,50 @@ public class PuzzleTimer {
         *           true if timer was successfully paused
         *           false otherwise
         */
-    public boolean resume() {
+    void resume() {
         if (timing && paused) {
             paused = false;
             timeOffset += SystemClock.elapsedRealtime() - timeCounter;
-            return true;
-        } else {
-            return false;
         }
     }
 
-    public boolean reset() {
+    void reset() {
         timing = false;
         paused = false;
 
         timeStart = 0;
         timeOffset = 0;
         timeCounter = 0;
-        return true;
     }
 
-    public boolean isTiming() {
+    boolean isTiming() {
         return timing;
     }
 
-    public boolean isPaused() {
+    boolean isPaused() {
         return paused;
     }
 
+    /*
+     * long getTime
+     * returns time of PuzzleTimer while active
+     */
     public long getTime() {
-        return SystemClock.elapsedRealtime() - timeStart - timeOffset;
+        if (paused) {
+            return timeCounter - timeStart - timeOffset;
+        }
+        else {
+            return SystemClock.elapsedRealtime() - timeStart - timeOffset;
+        }
     }
+//
+//    /*
+//     * long getStoppedTime
+//     * returns time of PuzzleTimer while paused
+//     */
+//    long getStoppedTime() {
+//        return timeCounter - timeStart - timeOffset;
+//    }
 
     /*
     *   FUNCTION    : formatTime
@@ -137,7 +140,7 @@ public class PuzzleTimer {
     *   RETURNS     :
     *       String : formatted String determined by 'timeMS'
     */
-    public static String formatTime(long timeMS) {
+    static String formatTime(long timeMS) {
         int second = (int) (timeMS/1000);
         int minute = second/60;
         second %= 60;

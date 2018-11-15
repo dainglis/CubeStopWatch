@@ -3,12 +3,16 @@
 *   AUTHOR  : David Inglis
 *   FIRST   : 2017-08-11
 *   DESC    :
+*       A timer for Rubik's cubes and other puzzles.
+*
+*   TODO:
+*   *   Lower screen brightness after timer runs for ?10 minutes, keep full functionality
 */
 
 
 package com.dainglis.cubestopwatch;
 
-import android.annotation.SuppressLint;
+import android.annotation.SuppressLint; //TODO: write custom ImageButton View to allow for View#performClick() override
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,28 +37,43 @@ import java.util.Locale;
 public class ClockMainActivity extends AppCompatActivity {
 
     // Layout elements
-    PuzzleTimer timer = new PuzzleTimer();
-    Handler timerHandler = new Handler();
-
     ImageButton timerButton;
     Button buttonLeft, buttonRight;
     TextView timerText, readyText;
+    Toolbar toolbar;
 
+    // Timer elements
+    boolean midPressTimer = false;
+    PuzzleTimer timer = new PuzzleTimer();
+    Handler timerHandler = new Handler();
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        // Set up toolbar
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        timerText = (TextView) findViewById(R.id.timer_text);
-        readyText = (TextView) findViewById(R.id.ready_text);
-        timerButton = (ImageButton) findViewById(R.id.inv_clock_button);
-        buttonLeft = (Button) findViewById(R.id.button_left_save);
-        buttonRight = (Button) findViewById(R.id.button_right_reset);
+        // Find element views
+        readyText = findViewById(R.id.ready_text);
+        timerText = findViewById(R.id.timer_text);
+        timerButton = findViewById(R.id.inv_clock_button);
+        buttonLeft = findViewById(R.id.button_left_save);
+        buttonRight = findViewById(R.id.button_right_reset);
 
+
+        // Checks that the user data file exists, and creates it if it does not
+//        initializeUserData();
+        UserData.appContext = getApplicationContext();
+        UserData.initializeUserData();
+
+        timer.reset();
         activityStateReset();
 
+        /*
         // timerButton
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,36 +87,68 @@ public class ClockMainActivity extends AppCompatActivity {
                 } else if (!timer.isPaused()) {
                     // DEPRECATED
                     // TODO: pause on button down
-                    System.out.println("DEBUG: Pause timer");
+                    System.out.println("DEBUG: Pause timer - this should not be reached");
                     activityStateTimerInactive();
                     timer.pause();
 
                 } else {
                     // DEPRECATED
                     // TODO: refactor this resume action to match deprecations
-                    System.out.println("DEBUG: Resume timer");
+                    System.out.println("DEBUG: Resume timer - this should not be reached");
                     activityStateTimerActive();
                     timer.resume();
 
                 }
             }
         });
+        */
+
 
         timerButton.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                if (!timer.isTiming()) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        activityStateTimerReady();
-                        return true;
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        System.out.println("DEBUG: Start timer");
-                        activityStateTimerActive();
-                        timer.start();
-                        return true;
-                    }
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (!timer.isTiming()) {
+                            // Ready the timer state
+                            System.out.println("DEBUG: Ready timer...");
+                            activityStateTimerReady();
+                            return true;
+                        }
+                        else if (!timer.isPaused()) {
+                            // Pause the timer as soon as user touches screen
+                            System.out.println("DEBUG: Pause timer");
+                            timer.pause();
+                            activityStateTimerInactive();
+                            updateTimerPost();
+                            midPressTimer = true;
+                            return true;
+                        }
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        if (!timer.isTiming()) {
+                            // Begin the timer when user releases the screen
+                            System.out.println("DEBUG: Start timer"); //DEBUG
+                            timer.start();
+                            activityStateTimerActive();
+                            return true;
+                        }
+                        else if (midPressTimer) {
+                            // Ensures that the timer is not resumed right after it is paused
+                            midPressTimer = false;
+                        }
+                        else if (timer.isPaused()) {
+                            // Resume the timer when user releases the screen
+                            System.out.println("DEBUG: Resume timer");
+                            timer.resume();
+                            activityStateTimerActive();
+                            return true;
+                        }
+                        break;
                 }
+
                 return false;
             }
         });
@@ -106,6 +157,15 @@ public class ClockMainActivity extends AppCompatActivity {
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // TODO:
+                // pass information to writing function saveToActiveFile
+                //  - get active file name
+                //  - open file handle
+                //  - write formatted time and date to file
+                //  - close file handle
+
+                //saveToActiveFile();
 
                 String filename = "records";
                 String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime());
@@ -120,7 +180,8 @@ public class ClockMainActivity extends AppCompatActivity {
                     outStream.write(data.getBytes());
                     outStream.close();
                     System.out.println("DEBUG: " + data + " saved successfully");
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     e.printStackTrace();
                     Snackbar.make(view, "Time was not saved successfully", Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
@@ -129,6 +190,8 @@ public class ClockMainActivity extends AppCompatActivity {
 
                 Snackbar.make(view, "Time " + data + " saved in records", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+
+                timer.reset();
                 activityStateReset();
             }
         });
@@ -141,24 +204,36 @@ public class ClockMainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Button B was pressed", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 */
+                timer.reset();
                 activityStateReset();
             }
         });
     }
 
+    public void saveToActiveFile() {
+        // pass information to writing function saveToActiveFile
+        //  - get active file name
+        //  - open file handle
+        //  - write formatted time and date to file
+        //  - close file handle
+
+    }
+
     Runnable updateTimerThread = new Runnable() {
         @Override
         public void run() {
-            // this runnable is used to update the screen with current timer time
-            long gTime = timer.getTime();
-
-            String text = PuzzleTimer.formatTime(gTime);
-
-            timerText.setText(text);
-
+            // This runnable is used to update the screen with current timer time
+            updateTimerPost();
             timerHandler.postDelayed(this, 0);
         }
     };
+
+    void updateTimerPost() {
+        long gTime = timer.getTime();
+        String text = PuzzleTimer.formatTime(gTime);
+
+        timerText.setText(text);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -179,7 +254,8 @@ public class ClockMainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.action_records) {
+        }
+        else if (id == R.id.action_records) {
             Intent intent = new Intent(this, RecordsActivity.class);
             startActivity(intent);
             return true;
@@ -195,8 +271,9 @@ public class ClockMainActivity extends AppCompatActivity {
      */
     public void buttonsDisabled() {
         buttonLeft.setEnabled(false);
-        buttonRight.setEnabled(false);
         buttonLeft.setVisibility(View.INVISIBLE);
+
+        buttonRight.setEnabled(false);
         buttonRight.setVisibility(View.INVISIBLE);
     }
 
@@ -206,8 +283,9 @@ public class ClockMainActivity extends AppCompatActivity {
     */
     public void buttonsEnabled() {
         buttonLeft.setEnabled(true);
-        buttonRight.setEnabled(true);
         buttonLeft.setVisibility(View.VISIBLE);
+
+        buttonRight.setEnabled(true);
         buttonRight.setVisibility(View.VISIBLE);
     }
 
@@ -218,7 +296,6 @@ public class ClockMainActivity extends AppCompatActivity {
     public void activityStateReset() {
         System.out.println("DEBUG: Activity reset");
         buttonsDisabled();
-        timer.reset();
 
         readyText.setVisibility(View.INVISIBLE);
         timerText.setText(R.string.time_layout_blank);
