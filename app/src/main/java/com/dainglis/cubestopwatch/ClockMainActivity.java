@@ -191,7 +191,7 @@ public class ClockMainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Time " + data + " saved in records", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
 
-                timer.reset();
+                timer.reset(); // should move to activityStateReset
                 activityStateReset();
             }
         });
@@ -204,7 +204,7 @@ public class ClockMainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Button B was pressed", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 */
-                timer.reset();
+                timer.reset(); // should move to activityStateReset
                 activityStateReset();
             }
         });
